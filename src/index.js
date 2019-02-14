@@ -35,6 +35,12 @@ const resolvers = {
       link.description = args.description
 
       return link
+    },
+    deleteLink: (parent, args) => {
+      let link = links.find((el) => el.id === args.id)
+      links = links.filter(el => el.id !== args.id)
+
+      return link
     }
   }
 }
