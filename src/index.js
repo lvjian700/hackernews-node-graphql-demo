@@ -28,6 +28,13 @@ const resolvers = {
       }
       links.push(link)
       return link
+    },
+    updateLink: (parent, args) => {
+      let link = links.find((el) => el.id === args.id)
+      link.url = args.url
+      link.description = args.description
+
+      return link
     }
   }
 }

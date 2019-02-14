@@ -6,6 +6,9 @@ type Query {
 
 type Mutation {
   post(url: String!, description: String!): Link!
+
+  # update 
+  updateLink(id: ID!, url: String, description: String): Link
 }
 
 type Link {
