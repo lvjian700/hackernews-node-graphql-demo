@@ -1,19 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga')
 
-// 1. define GraphQL schema
-const typeDefs = `
-type Query {
-  info: String!
-  feed: [Link!]!
-}
-
-type Link {
-  id: ID!
-  description: String!
-  url: String!
-}
-`
-
 // 2. build resolver for api
 let links = [{
   id: 'link-0',
@@ -34,7 +20,7 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: './src/schema.graphql',
   resolvers,
 })
 
