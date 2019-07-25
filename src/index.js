@@ -32,10 +32,12 @@ const resolvers = {
       links.push(link)
       return link
     },
-    updateLink: (parent, args) => {
-      let link = links.find((el) => el.id === args.id)
-      link.url = args.url
-      link.description = args.description
+    updateLink: (parent, {input}, context) => {
+      console.log(input);
+      console.log(context);
+      let link = links.find((el) => el.id === input.id)
+      link.url = input.url
+      link.description = input.description
 
       return link
     },
