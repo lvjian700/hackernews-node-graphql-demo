@@ -15,9 +15,10 @@ const resolvers = {
   Query: {
     info: () => `This is the API of a Hackernews clone.`,
     feed: () => links,
-    link: (parent, id) => {
+    link: (parent, params, context, info) => {
+      console.log('context: ', context);
       return links.find((el) => {
-        return id.id == el.id
+        return params.id == el.id
       })
     }
   },
@@ -50,8 +51,12 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs: fs.readFileSync(path.join(__dirname, "schema.graphql"), "utf8"),
   resolvers,
-  playground: true,
-  introspection: true
+  context: ({ event, context }) => ({
+    headers: event.headers,
+    functionName: context.functionName,
+    event,
+    context,
+  }),
 });
 
 exports.handler = server.createHandler();
