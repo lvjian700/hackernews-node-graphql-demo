@@ -1,0 +1,25 @@
+service: graphql-sample
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  graphql:
+    handler: src/index.handler
+    events:
+    - http:
+        path: /
+        method: post
+        cors: true
+  playground:
+    handler: src/index.handler
+    events:
+    - http:
+        path: /
+        method: get
+        cors: true
+

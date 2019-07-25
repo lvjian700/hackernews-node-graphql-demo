@@ -1,4 +1,6 @@
-const { GraphQLServer } = require('graphql-yoga')
+const { ApolloServer } = require('apollo-server-lambda');
+const fs = require('fs');
+const path = require('path');
 
 // 2. build resolver for api
 let links = [{
@@ -45,9 +47,12 @@ const resolvers = {
   }
 }
 
-const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+const server = new ApolloServer({
+  typeDefs: fs.readFileSync(path.join(__dirname, "schema.graphql"), "utf8"),
   resolvers,
-})
+  playground: true,
+  introspection: true
+});
 
-server.start(() => console.log(`Server is running on http://localhost:4000/`))
+exports.handler = server.createHandler();
+
