@@ -1,7 +1,27 @@
+type Link {
+  id: ID!
+  description: String!
+  url: String!
+}
+
+type Text {
+  id: ID!
+  text: String!
+}
+
+union MediaResult = Link | Text
+
+input UpdateLinkInput {
+  id: ID!
+  url: String
+  description: String
+}
+
 type Query {
   info: String!
   feed: [Link!]!
   link(id: ID!): Link
+  medias: [MediaResult]
 }
 
 type Mutation {
@@ -12,16 +32,4 @@ type Mutation {
 
   # delete
   deleteLink(id: ID!): Link
-}
-
-type Link {
-  id: ID!
-  description: String!
-  url: String!
-}
-
-input UpdateLinkInput {
-  id: ID!
-  url: String
-  description: String
 }

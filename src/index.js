@@ -12,6 +12,17 @@ let links = [{
 let idCount = links.length
 
 const resolvers = {
+  MediaResult: {
+    __resolveType(obj, context, info) {
+      if (obj.url) {
+        return 'Link';
+      }
+
+      if (obj.text) {
+        return 'Text';
+      }
+    }
+  },
   Query: {
     info: () => `This is the API of a Hackernews clone.`,
     feed: () => links,
@@ -20,7 +31,17 @@ const resolvers = {
       return links.find((el) => {
         return params.id == el.id
       })
-    }
+    },
+    medias: () => {
+      return [{
+        id: 'link-0',
+        description: 'this is a link',
+        url: 'www.link1.com'
+      }, {
+        id: 'text-0',
+        text: 'i am a text'
+      }];
+    },
   },
   Mutation: {
     post: (parent, args) => {
